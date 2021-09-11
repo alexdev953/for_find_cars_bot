@@ -1,10 +1,12 @@
+import asyncio
+
 import aiogram.utils.exceptions
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from config import API_TOKEN
 from db_func import DBFunc
-
+from bot_utils import format_msg_lp, format_msg_vin
 
 memory_storage = MemoryStorage()
 
@@ -24,7 +26,24 @@ async def take_start(message: types.Message):
 @dp.message_handler(regexp='^[A-Za-z]{2}[0-9]{4}[A-Z a-z]{2}|%$')
 async def take_numberplate(message: types.Message):
     number_plate = message.text
-    DBFunc().get_info_by_number_plate(number_plate)
+    data_lp = DBFunc().get_info_by_number_plate(number_plate)
+    message_list = format_msg_lp(data_lp, number_plate)
+    print(message_list)
+    for text, inline_key in message_list:
+        await message.answer(text=text, reply_markup=inline_key)
+        await asyncio.sleep(0.5)
+
+
+@dp.callback_query_handler(text_startswith=['v@'])
+async def take_vin_id(query: types.CallbackQuery):
+    print(query)
+    await bot.answer_callback_query(query.id, '🔭 Шукаю по VIN')
+    vin_id = query.data.split('@')[1]
+    data_list = DBFunc().get_info_by_vin_id(vin_id)
+    answer_list = format_msg_vin(data_list)
+    for text in answer_list:
+        await query.message.answer(text)
+        await asyncio.sleep(0.5)
 
 @dp.errors_handler()
 async def send_admin(update: types.Update, error):
