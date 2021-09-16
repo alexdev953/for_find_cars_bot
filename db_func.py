@@ -1,8 +1,13 @@
 import psycopg2
 import psycopg2.extras
-
 from config import DATABASE, USER, HOST, PASSWORD
 from typing import Union
+import sys
+
+postgresql_host = {'win32': HOST,
+                   'linux': 'localhost'}
+
+HOST = postgresql_host.get(sys.platform, HOST)
 
 
 class DBFunc:
