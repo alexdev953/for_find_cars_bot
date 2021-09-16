@@ -40,9 +40,10 @@ class FormatMessage:
 
     def format_msg_lp(self, data: list, number_lp: str):
         if data:
-            vin_keyboard = InlineKeyboardMarkup(row_width=1)
+
             answer_list = []
             for val in data:
+                vin_keyboard = InlineKeyboardMarkup(row_width=1)
                 message = self.message_ans(val)
                 vin_code_id = val.get('vin_code_id', 'Пусто')
                 if vin_code_id != '1':
