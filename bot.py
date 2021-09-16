@@ -3,7 +3,7 @@ from translator import Cyrillic
 from aiogram import Bot, Dispatcher, executor, types
 from config import API_TOKEN
 from db_func import DBFunc
-from bot_utils import format_msg_lp, format_msg_vin
+from bot_utils import FormatMessage
 
 
 # Initialize bot and dispatcher
@@ -23,7 +23,7 @@ async def take_start(message: types.Message):
 async def take_numberplate(message: types.Message):
     number_plate = Cyrillic().transliterate(message.text).upper()
     data_lp = DBFunc().get_info_by_number_plate(number_plate)
-    message_list = format_msg_lp(data_lp, number_plate)
+    message_list = FormatMessage().format_msg_lp(data_lp, number_plate)
     if isinstance(message_list, list):
         for text, inline_key in message_list:
             await message.answer(text=text, reply_markup=inline_key)
@@ -37,7 +37,7 @@ async def take_vin_id(query: types.CallbackQuery):
     await bot.answer_callback_query(query.id, '🔭 Шукаю по VIN')
     vin_id = query.data.split('@')[1]
     data_list = DBFunc().get_info_by_vin_id(vin_id)
-    answer_list = format_msg_vin(data_list)
+    answer_list = FormatMessage().format_msg_vin(data_list)
     for text in answer_list:
         await query.message.answer(text)
         await asyncio.sleep(0.5)
