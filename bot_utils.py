@@ -8,7 +8,12 @@ PERSON_TYPE_DICT = {'P': 'Фізична особа',
 class FormatMessage:
 
     @staticmethod
-    def message_ans(data: dict):
+    def message_ans(data: dict) -> str:
+        """
+        Функція для формування тексту з отриманої інформації.
+        :param data: Словник для розбору.
+        :return: Сформований текст.
+        """
         number_plate = data.get('number_plate', 'Пусто')
         operation = data.get('operation', 'Пусто')
         date_operation = data.get('date_operation', 'Пусто')
@@ -39,6 +44,15 @@ class FormatMessage:
         return message
 
     def format_msg_lp(self, data: list, number_lp: str):
+        """
+        Get list with info and iterate for beauty msg answer
+        :param data: list with info
+        :type data: list
+        :param number_lp: numberplate
+        :type number_lp: str
+        :return: answer
+        :rtype: Union
+        """
         if data:
 
             answer_list = []
