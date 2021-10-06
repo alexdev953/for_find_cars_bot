@@ -19,7 +19,8 @@ async def take_start(message: types.Message):
         f"Привіт, {message.from_user.first_name}!\nЯ - <b>{about_bot['first_name']}</b>")
 
 
-@dp.message_handler(lambda message: DBFunc().check_user(message), regexp='^[A-Za-z]|[А-ЯҐЄІЇ]{2}[0-9]{4}[A-Z a-z]|[А-ЯҐЄІЇ]{2}|%$')
+@dp.message_handler(lambda message: DBFunc().check_user(message),
+                    regexp='^[A-Za-z]|[А-ЯҐЄІЇ]{2}[0-9]{4}[A-Z a-z]|[А-ЯҐЄІЇ]{2}|%$')
 async def take_numberplate(message: types.Message):
     number_plate = Cyrillic().transliterate(message.text).upper()
     data_lp = DBFunc().get_info_by_number_plate(number_plate)
@@ -32,7 +33,8 @@ async def take_numberplate(message: types.Message):
         await message.answer(message_list)
 
 
-@dp.callback_query_handler(text_startswith=['v@'])
+@dp.callback_query_handler(lambda message: DBFunc().check_user(message),
+                           text_startswith=['v@'])
 async def take_vin_id(query: types.CallbackQuery):
     await bot.answer_callback_query(query.id, '🔭 Шукаю по VIN')
     vin_id = query.data.split('@')[1]
