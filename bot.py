@@ -19,7 +19,7 @@ async def take_start(message: types.Message):
         f"Привіт, {message.from_user.first_name}!\nЯ - <b>{about_bot['first_name']}</b>")
 
 
-@dp.message_handler(regexp='^[A-Za-z]|[А-ЯҐЄІЇ]{2}[0-9]{4}[A-Z a-z]|[А-ЯҐЄІЇ]{2}|%$')
+@dp.message_handler(lambda message: DBFunc().check_user(message), regexp='^[A-Za-z]|[А-ЯҐЄІЇ]{2}[0-9]{4}[A-Z a-z]|[А-ЯҐЄІЇ]{2}|%$')
 async def take_numberplate(message: types.Message):
     number_plate = Cyrillic().transliterate(message.text).upper()
     data_lp = DBFunc().get_info_by_number_plate(number_plate)
