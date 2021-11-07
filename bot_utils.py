@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-PERSON_TYPE_DICT = {'P': 'Фізична особа',
-                    'J': 'Юридична особа',
+PERSON_TYPE_DICT = {'P': 'Фізична особа 👨🏻‍💻',
+                    'J': 'Юридична особа 👨🏻‍⚖️',
                     None: 'Інформація відсутня'}
 
 COLOR_CAR = {'ЧЕРВОНИЙ': '🔴',
@@ -69,7 +69,6 @@ class FormatMessage:
         :rtype: Union
         """
         if data:
-
             answer_list = []
             for val in data:
                 vin_keyboard = InlineKeyboardMarkup(row_width=1)
@@ -79,7 +78,6 @@ class FormatMessage:
                     vin_keyboard.add(InlineKeyboardButton('Перевірити по VIN', callback_data=f"v@{vin_code_id}"))
                 answer_list.append((message, vin_keyboard))
             return answer_list
-
         else:
             answer = f'По номеру {number_lp}, нічого не знайдено'
             return answer
@@ -91,7 +89,6 @@ class FormatMessage:
                 message = self.message_ans(val)
                 answer_list.append(message)
             return answer_list
-
         else:
             answer = f'По VIN нічого не знайдено'
             return [answer]
