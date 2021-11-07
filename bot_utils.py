@@ -54,7 +54,7 @@ class FormatMessage:
                   f'<b>VIN:</b> {vin_code}\n<b>Назва авто: </b>{brand}\n<b>Модель:</b> {model}\n' \
                   f'<b>Рік випуску: </b>{year}\n<b>Паливо: </b>{fuel}\n' \
                   f'<b>Колір:</b> {color} {COLOR_CAR.get(color)}\n<b>Тип авто:</b> {kind}\n<b>Кузов:</b> {body}\n' \
-                  f'<b>Призначеня: </b>{purpose}\n<b>Об\'єм двигуна: </b>{round(int(capacity) / 1000, 1)}\n' \
+                  f'<b>Призначеня: </b>{purpose}\n<b>Об\'єм двигуна: </b>{capacity}\n' \
                   f'<b>Вага:</b> {weight}кг.\n<b>Повна вага:</b> {total_weight}кг.'
         return message
 

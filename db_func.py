@@ -47,12 +47,10 @@ class DBFunc:
         sql = f"select * from find_cars.public.get_operation_lp('{number_plate}')"
         info = self.db_connect(sql)
         info_dict = [dict(val) for val in info] if info else []
-        print(info_dict)
         return info_dict
 
     def get_info_by_vin_id(self, vin_id):
         sql = f"select * from find_cars.public.get_operation_vin({vin_id})"
         info = self.db_connect(sql)
         info_dict = [dict(val) for val in info] if info else []
-        print(info_dict)
         return info_dict
